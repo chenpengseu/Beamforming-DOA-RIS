@@ -2,23 +2,23 @@ clc
 clear all
 close all
 
-% STEP a: µ¼Èë¾ØÕóU %%%%%%%%%%%
+% STEP a: å¯¼å…¥çŸ©é˜µU %%%%%%%%%%%
 load valid_dir50.mat
 U=valid;
 
-P = 20;%²âÁ¿´ÎÊı
-M = 16;%ÌìÏßÕóÔªÊı
+P = 20;%æµ‹é‡æ¬¡æ•°
+M = 16;%å¤©çº¿é˜µå…ƒæ•°
 
-% STEP b: ĞÅºÅÏà¹Ø %%%%%%%%%%%%%%%%%U*A*sig
-K = 1; %¿ìÅÄÊı
-sigNum = 2;%ĞÅºÅ¸öÊı
-d = 0.5;%1/2²¨³¤
+% STEP b: ä¿¡å·ç›¸å…³ %%%%%%%%%%%%%%%%%U*A*sig
+K = 1; %å¿«æ‹æ•°
+sigNum = 2;%ä¿¡å·ä¸ªæ•°
+d = 0.5;%1/2æ³¢é•¿
 SNR = 20;
 theta = [30.56 10.24];%deg
 vec = @(MAT) MAT(:);
 vecH = @(MAT) MAT(:).';
 SteerVec = @(angTmp) exp(1i*2*pi*d*[0:M-1].'*sind(vecH(angTmp)));
-epsilon=262.6*exp(-0.1327*SNR);
+epsilon=262.6*exp(-0.1327*SNR); %ç»éªŒå€¼
 
 Vars = 1;
 sig =sqrt(Vars)*exp(1i*2*pi*rand(sigNum,K)) ;
@@ -29,7 +29,7 @@ noise = sqrt(noiseVar) .* noise0;
 y = U*SteerVec(theta)*sig + noise;
         
 
-xxl = [-60:0.1:60];%É¨Ãè·¶Î§
+xxl = [-60:0.1:60]; %æ‰«æèŒƒå›´
 scanxxl = U*SteerVec(xxl);
 
 
@@ -48,6 +48,3 @@ cvx_end
 Ppoly=p'*scanxxl;
 [pks, locs] = findpeaks(abs(Ppoly),xxl,'SortStr','descend');
 DOA=locs(1:sigNum);
-figure; plot(xxl, abs(Ppoly));
-hold on; plot(locs, pks, 'v');
-hold on; stem(theta, max(abs(Ppoly))*ones(sigNum,1), 'BaseValue', 0)
