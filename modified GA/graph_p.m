@@ -1,17 +1,14 @@
 function [theta,F]=graph_p(p)
 c=299792458;
-N=16;        % Õñ×ÓÊıÄ¿
+N=16;        % æŒ¯å­æ•°ç›®
 f=300e6;
-lambda=1;     % ²¨³¤
-beta=-2*pi/lambda;       % ×ÔÓÉ¿Õ¼ä²¨Êı
-d=lambda/2*(1-1/N)*0.92;       % µ¥Ôª¼ä¾à
+lambda=1;     % æ³¢é•¿
+beta=-2*pi/lambda;       % è‡ªç”±ç©ºé—´æ³¢æ•°
+d=lambda/2*(1-1/N)*0.92;       % å•å…ƒé—´è·
 % d=0.5*lambda;
-alpha1=-beta*d*sind(90);
-theta0=linspace(-pi/3,pi/3,181);
-
-Psi1=beta*d*sin(theta0)+alpha1;
-% Psi1=beta*d*sin(theta0);
-%¾ùÔÈÖ±ÏßÕó
+theta0=linspace(0,pi/3,181);
+Psi1=beta*d*sin(theta0);
+%å‡åŒ€ç›´çº¿é˜µ
 f0=[];
 for i=1:N
     f0=[f0;exp(-1j*(i-1)*Psi1)];
@@ -20,5 +17,4 @@ f11=p*f0;
 theta=rad2deg(theta0);
 f1=abs(f11);
 F=20*log10(f1/max(f1));
-% F=real(f1);
 end
